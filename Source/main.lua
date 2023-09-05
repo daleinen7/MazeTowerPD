@@ -14,21 +14,26 @@ local playerSprite = nil
 gfx.setColor(gfx.kColorBlack)
 
 
--- 
-
-
-
+-- Iterate through the grid and draw the levels
+-- Make a player sprite
+-- Allow player to move around the grid
+-- Stop player if they hit a wall
+-- Allow player to move to next level if they hit a door
+-- Make a door sprite
+-- Make a wall sprite
 
 function myGameSetUp()
+
+
 
   -- Set up the player sprite.
   -- The :setCenter() call specifies that the sprite will be anchored at its center.
   -- The :moveTo() call moves our sprite to the center of the display.
 
-  local playerImage = gfx.image.new('Images/playerImage')
-  assert( playerImage ) -- make sure the image was where we thought
+  local mazzy = gfx.image.new('Images/mazzy')
+  assert( mazzy ) -- make sure the image was where we thought
 
-  playerSprite = gfx.sprite.new( playerImage )
+  playerSprite = gfx.sprite.new( mazzy )
   playerSprite:moveTo( 200, 120 ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
   playerSprite:add() -- This is critical!
 
