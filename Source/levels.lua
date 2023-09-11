@@ -1,4 +1,4 @@
-local levels = {
+levels = {
     {
       name = "Grab Stuff",
       walls = {

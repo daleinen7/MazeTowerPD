@@ -6,8 +6,7 @@ import "CoreLibs/math"
 import "CoreLibs/crank"
 import "CoreLibs/animation"
 
-local levels = require("levels")
-
+import "levels"
 
 local pd <const> = playdate
 local gfx <const> = pd.graphics
@@ -27,6 +26,7 @@ currentLevel = 1
 
 -- Create an empty tilemap
 local tilemap = {}
+
 function buildLevel(level)
   local tilesetKeyTranslation = {
     walls = 844,
@@ -46,8 +46,17 @@ function buildLevel(level)
 
   -- Iterate through each tile type needing added
   for tile, positions in pairs(level) do
+
+		print("TILE: " .. tile)
+
+		print("POSITIONS: ")
+		print(positions)
+
+		print("TILESET KEY TRANSLATION: ")
+		print(tilesetKeyTranslation[tile])
+		
     -- Iterate through each position needing added
-    for i = 1, #positions do
+    for i = 1, #level do
       -- Add the tile to the tilemap
 
       print("What is this note")
@@ -66,7 +75,7 @@ function buildLevel(level)
   background:add()
 end
 
--- buildLevel(levels[currentLevel])
+buildLevel(levels[currentLevel])
 
 print(levels[1])
 
