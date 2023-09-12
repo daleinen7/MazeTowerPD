@@ -44,27 +44,23 @@ function buildLevel(level)
     tilemap[i] = 0
   end
 
-  -- Iterate through each tile type needing added
-  for tile, positions in pairs(level) do
-
-		print("TILE: " .. tile)
-
-		print("POSITIONS: ")
-		print(positions)
-
-		print("TILESET KEY TRANSLATION: ")
-		print(tilesetKeyTranslation[tile])
-		
-    -- Iterate through each position needing added
-    for i = 1, #level do
-      -- Add the tile to the tilemap
-
-      print("What is this note")
-      print(tile)
-      tilemap[positions[i]] = tile
+  -- function to iterate through table and set tiles
+  local function setTiles(tiles, tilesetKey)
+    for i = 1, #tiles do
+      tilemap[tiles[i] + 1] = tilesetKeyTranslation[tilesetKey]
     end
   end
 
+  -- Set the tiles
+  setTiles(level.walls, "walls")
+  setTiles(level.torches, "torches")
+  setTiles(level.ladders, "ladders")
+  setTiles(level.holes, "holes")
+  setTiles(level.planks, "planks")
+  setTiles(level.coins, "coins")
+  setTiles(level.exit, "exit")
+
+  -- Create a tilemap object
   tm = gfx.tilemap.new()
   tm:setImageTable(tilesheet)
   tm:setTiles(tilemap, 15)

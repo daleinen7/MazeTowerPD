@@ -16,8 +16,8 @@ levels = {
       holes = {78, 153},
       planks = {50},
       coins = {16, 142},
-      exit = 5,
-      darkTime = 60000
+      exit = {5},
+      darkTime = {60000}
     },
     {
     name = "Uh Oh, it's dark",
@@ -34,8 +34,8 @@ levels = {
     holes = {17, 131},
     planks = {87},
     coins = {25, 193},
-    exit = 5,
-    darkTime = 1000
+    exit = {5},
+    darkTime = {1000}
   },
   {
     name = "So many holes!",
@@ -50,8 +50,8 @@ levels = {
     holes = {27, 42, 54, 73, 77, 82, 114, 111, 140, 146, 154, 108, 127, 122},
     planks = {96},
     coins = {98, 147},
-    exit = 5,
-    darkTime = 4000
+    exit = {5},
+    darkTime = {4000}
   },
   {
     name = "Dooozy!",
@@ -70,8 +70,8 @@ levels = {
     holes = {28, 76, 81, 117, 123, 144},
     planks = {87},
     coins = {113, 147},
-    exit = 5,
-    darkTime = 5000
+    exit = {5},
+    darkTime = {5000}
   },
   {
     name = "Luqui's Level",
@@ -88,7 +88,7 @@ levels = {
     holes = {95, 97, 99, 110, 116, 125, 146, 176, 206},
     planks = {28},
     coins = {31, 49, 53, 57, 124, 158, 167, 183},
-    exit = 5,
-    darkTime = 500
+    exit = {5},
+    darkTime = {500}
   }
 }
