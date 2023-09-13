@@ -19,9 +19,6 @@ gfx.setBackgroundColor(gfx.kColorBlack)
 -- Import the tileset
 tilesheet = gfx.imagetable.new("Images/onebit")
 
--- local player = Player(100, 60, gfx.imagetable.new("images/mazzy"))
--- player:add()
-
 currentLevel = 1
 
 -- Create an empty tilemap
@@ -73,14 +70,34 @@ end
 
 buildLevel(levels[currentLevel])
 
-print(levels[1])
+-- Load the player character sprite from the tileset (assuming tile 26 is the player character)
+local playerSprite = gfx.tilemap.new()
+playerSprite:setImageTable(tilesheet)
+playerSprite:setTiles({26}, 1)
+
+local player = gfx.sprite.new(playerSprite)
+
+player:add()
+
+player:moveTo(200, 140)
+
+playerX, playerY = 200, 140
 
 function pd.update()
 
-	if pd.buttonJustPressed(pd.kButtonA) then
-		tm:setTileAtPosition(2, 2, 6)
-		tm:draw(0, 0)
-	end
+  -- Check for arrow key presses and update player coordinates
+    if pd.buttonIsPressed(pd.kButtonUp) then
+        playerY = playerY - 1
+    elseif pd.buttonIsPressed(pd.kButtonDown) then
+        playerY = playerY + 1
+    elseif pd.buttonIsPressed(pd.kButtonLeft) then
+        playerX = playerX - 1
+    elseif pd.buttonIsPressed(pd.kButtonRight) then
+        playerX = playerX + 1
+    end
+
+    -- Update the player's position
+    player:moveTo(playerX, playerY)
 
 	gfx.sprite.update()
 	pd.timer.updateTimers()
