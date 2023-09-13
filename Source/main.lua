@@ -79,21 +79,21 @@ local player = gfx.sprite.new(playerSprite)
 
 player:add()
 
-player:moveTo(200, 140)
+player:moveTo(120, 232)
 
-playerX, playerY = 200, 140
+playerX, playerY = 120, 232
 
 function pd.update()
 
   -- Check for arrow key presses and update player coordinates
-    if pd.buttonIsPressed(pd.kButtonUp) then
-        playerY = playerY - 1
-    elseif pd.buttonIsPressed(pd.kButtonDown) then
-        playerY = playerY + 1
-    elseif pd.buttonIsPressed(pd.kButtonLeft) then
-        playerX = playerX - 1
-    elseif pd.buttonIsPressed(pd.kButtonRight) then
-        playerX = playerX + 1
+    if pd.buttonJustPressed(pd.kButtonUp) then
+        playerY = playerY - 16
+    elseif pd.buttonJustPressed(pd.kButtonDown) then
+        playerY = playerY + 16
+    elseif pd.buttonJustPressed(pd.kButtonLeft) then
+        playerX = playerX - 16
+    elseif pd.buttonJustPressed(pd.kButtonRight) then
+        playerX = playerX + 16
     end
 
     -- Update the player's position
