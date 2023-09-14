@@ -83,21 +83,81 @@ player:moveTo(120, 232)
 
 playerX, playerY = 120, 232
 
+local lerpFactor = 0.5
+
+function isValueInTable(value, table)
+    for _, v in pairs(table) do
+        if v == value then
+            return true
+        end
+    end
+    return false
+end
+
+function playerIsNotBlocked(x, y, direction)
+  -- Convert pixel coordinates to tile coordinates
+  local tileX = (math.floor(x / 16)) + 1
+  local tileY = (math.floor(y / 16)) + 1
+
+  print('--- BEFORE ---')
+  print(tileX)
+  print('---')
+  print(tileY)
+  print('---')
+
+
+  -- Check the direction and adjust the tile coordinates accordingly
+  if direction == "up" then
+    tileY = tileY - 1
+  elseif direction == "down" then
+    tileY = tileY + 1
+  elseif direction == "left" then
+    tileX = tileX - 1
+  elseif direction == "right" then
+    tileX = tileX + 1
+  end
+
+  print('---')
+  print('--- AFTER ---')
+  print(tileX)
+  print('---')
+  print(tileY)
+  print('---')
+
+  print((tileY - 1) * 15 + tileX)
+
+  -- print(isValueInTable((tileY - 1) * 15 + tileX, levels[currentLevel].walls))
+
+  -- print(isValueInTable((tyleY - 1) * 15 + tileX, levels[currentLevel].walls))
+
+  -- return  isValueInTable((tileY - 1) * 15 + tileX, levels[currentLevel].walls)
+  return true
+end
+
 function pd.update()
+  local targetX, targetY = playerX, playerY  -- Store the target coordinates
 
   -- Check for arrow key presses and update player coordinates
-    if pd.buttonJustPressed(pd.kButtonUp) then
-        playerY = playerY - 16
-    elseif pd.buttonJustPressed(pd.kButtonDown) then
-        playerY = playerY + 16
-    elseif pd.buttonJustPressed(pd.kButtonLeft) then
-        playerX = playerX - 16
-    elseif pd.buttonJustPressed(pd.kButtonRight) then
-        playerX = playerX + 16
-    end
+  if pd.buttonJustPressed(pd.kButtonUp) and playerIsNotBlocked(targetX, targetY - 16, "up") then
+    playerY = playerY - 16
+  elseif pd.buttonJustPressed(pd.kButtonDown) and playerIsNotBlocked(targetX, targetY + 16, "down") then
+    playerY = playerY + 16
+  elseif pd.buttonJustPressed(pd.kButtonLeft) and playerIsNotBlocked(targetX - 16, targetY, "left") then
+    playerX = playerX - 16
+  elseif pd.buttonJustPressed(pd.kButtonRight) and playerIsNotBlocked(targetX + 16, targetY, "right") then
+    playerX = playerX + 16
+  end
 
-    -- Update the player's position
-    player:moveTo(playerX, playerY)
+  -- Calculate the difference between the current and target positions
+  local deltaX = playerX - player.x
+  local deltaY = playerY - player.y
+
+  -- Apply linear interpolation to smooth the movement
+  player.x = player.x + (deltaX * lerpFactor)
+  player.y = player.y + (deltaY * lerpFactor)
+
+  -- Update the player's position
+  player:moveTo(player.x, player.y)
 
 	gfx.sprite.update()
 	pd.timer.updateTimers()
