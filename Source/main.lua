@@ -16,6 +16,19 @@ gfx.setColor(gfx.kColorBlack)
 gfx.fillRect(0, 0, 800, 480)
 gfx.setBackgroundColor(gfx.kColorBlack)
 
+
+local initPlayerTileX, initPlayerTileY = 8, 14
+playerX, playerY = initPlayerTileX * 32 - 16, initPlayerTileY * 32 - 16
+gfx.setDrawOffset(-playerX + 200, -playerY + 120)
+
+local playerSprite = gfx.image.new('Images/mazzy.png')
+
+local player = gfx.sprite.new(playerSprite)
+
+player:add()
+
+
+
 -- Import the tileset
 tilesheet = gfx.imagetable.new("Images/doubletime")
 
@@ -70,20 +83,7 @@ end
 
 buildLevel(levels[currentLevel])
 
--- Load the player character sprite from the tileset (assuming tile 26 is the player character)
-local playerSprite = gfx.image.new('Images/mazzy.png')
-
-local player = gfx.sprite.new(playerSprite)
-
-player:add()
-
-player:moveTo(120, 232)
-
-local initPlayerTileX, initPlayerTileY = 6, 2
-
-playerX, playerY = initPlayerTileX * 32 - 16, initPlayerTileY * 32 - 16
-
-local lerpFactor = 0.5
+local lerpFactor = 0.25
 
 function isValueInTable(value, table)
   for _, v in pairs(table) do
@@ -117,6 +117,9 @@ function playerIsNotBlocked(x, y, direction)
 end
 
 function pd.update()
+
+  gfx.setDrawOffset(-player.x + 200, -player.y + 120)
+
   local targetX, targetY = playerX, playerY  -- Store the target coordinates
 
   -- Check for arrow key presses and update player coordinates
