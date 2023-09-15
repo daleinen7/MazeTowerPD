@@ -13,11 +13,11 @@ local gfx <const> = pd.graphics
 
 -- Set background to black
 gfx.setColor(gfx.kColorBlack)
-gfx.fillRect(0, 0, 400, 240)
+gfx.fillRect(0, 0, 800, 480)
 gfx.setBackgroundColor(gfx.kColorBlack)
 
 -- Import the tileset
-tilesheet = gfx.imagetable.new("Images/onebit")
+tilesheet = gfx.imagetable.new("Images/doubletime")
 
 currentLevel = 1
 
@@ -71,9 +71,7 @@ end
 buildLevel(levels[currentLevel])
 
 -- Load the player character sprite from the tileset (assuming tile 26 is the player character)
-local playerSprite = gfx.tilemap.new()
-playerSprite:setImageTable(tilesheet)
-playerSprite:setTiles({26}, 1)
+local playerSprite = gfx.image.new('Images/mazzy.png')
 
 local player = gfx.sprite.new(playerSprite)
 
@@ -81,7 +79,9 @@ player:add()
 
 player:moveTo(120, 232)
 
-playerX, playerY = 120, 232
+local initPlayerTileX, initPlayerTileY = 6, 2
+
+playerX, playerY = initPlayerTileX * 32 - 16, initPlayerTileY * 32 - 16
 
 local lerpFactor = 0.5
 
@@ -93,13 +93,11 @@ function isValueInTable(value, table)
   end
   return false
 end
-  
-
 
 function playerIsNotBlocked(x, y, direction)
   -- Convert pixel coordinates to tile coordinates
-  local tileX = (math.floor(x / 16)) + 1
-  local tileY = (math.floor(y / 16)) + 1
+  local tileX = (math.floor(x / 32)) + 1
+  local tileY = (math.floor(y / 32)) + 1
 
   print('--- TARGET ---')
   print(tileX)
@@ -114,7 +112,7 @@ function playerIsNotBlocked(x, y, direction)
 
   -- print(isValueInTable((tyleY - 1) * 15 + tileX, levels[currentLevel].walls))
 
-  return not isValueInTable(((tileY - 1) * 15 + tileX) - 1, levels[currentLevel].walls) 
+  return not isValueInTable(((tileY - 1) * 15 + tileX) - 1, levels[currentLevel].walls)
   -- return true
 end
 
@@ -122,14 +120,14 @@ function pd.update()
   local targetX, targetY = playerX, playerY  -- Store the target coordinates
 
   -- Check for arrow key presses and update player coordinates
-  if pd.buttonJustPressed(pd.kButtonUp) and playerIsNotBlocked(targetX, targetY - 16) then
-    playerY = playerY - 16
-  elseif pd.buttonJustPressed(pd.kButtonDown) and playerIsNotBlocked(targetX, targetY + 16) then
-    playerY = playerY + 16
-  elseif pd.buttonJustPressed(pd.kButtonLeft) and playerIsNotBlocked(targetX - 16, targetY) then
-    playerX = playerX - 16
-  elseif pd.buttonJustPressed(pd.kButtonRight) and playerIsNotBlocked(targetX + 16, targetY) then
-    playerX = playerX + 16
+  if pd.buttonJustPressed(pd.kButtonUp) and playerIsNotBlocked(targetX, targetY - 32) then
+    playerY = playerY - 32
+  elseif pd.buttonJustPressed(pd.kButtonDown) and playerIsNotBlocked(targetX, targetY + 32) then
+    playerY = playerY + 32
+  elseif pd.buttonJustPressed(pd.kButtonLeft) and playerIsNotBlocked(targetX - 32, targetY) then
+    playerX = playerX - 32
+  elseif pd.buttonJustPressed(pd.kButtonRight) and playerIsNotBlocked(targetX + 32, targetY) then
+    playerX = playerX + 32
   end
 
   -- Calculate the difference between the current and target positions
