@@ -85,19 +85,6 @@ buildLevel(levels[currentLevel])
 
 local lerpFactor = 0.25
 
-function dump(o)
-   if type(o) == 'table' then
-      local s = '{ '
-      for k,v in pairs(o) do
-         if type(k) ~= 'number' then k = '"'..k..'"' end
-         s = s .. '['..k..'] = ' .. dump(v) .. ','
-      end
-      return s .. '} '
-   else
-      return tostring(o)
-   end
-end
-
 function isValueInTable(value, table)
   for _, v in pairs(table) do
       if v == value then
@@ -108,13 +95,9 @@ function isValueInTable(value, table)
 end
 
 function playerIsNotBlocked(x, y)
-  local tileX = (math.floor(x / 32)) + 1
-  local tileY = (math.floor(y / 32)) + 1
-
-  -- return not isValueInTable(((tileY - 1) * 15 + tileX) - 1, levels[currentLevel].walls)
-  -- check if tile being checked is 844
-  print ("WHAT: ", tilemap[(tileY - 1) * 15 + tileX] ~= 844)
-  return not tilemap[(tileY - 1) * 15 + tileX] ~= 844
+  local tileX = math.floor(x / 32) + 1
+  local tileY = math.floor(y / 32) + 1
+  return tilemap[(tileY - 1) * 15 + tileX] ~= 844
 end
 
 function pd.update()
@@ -125,12 +108,20 @@ function pd.update()
 
   -- Check for arrow key presses and update player coordinates
   if pd.buttonJustPressed(pd.kButtonUp) and playerIsNotBlocked(targetX, targetY - 32) then
+    print("UP")
+    print(playerIsNotBlocked(targetX, targetY - 32))
     playerY = playerY - 32
   elseif pd.buttonJustPressed(pd.kButtonDown) and playerIsNotBlocked(targetX, targetY + 32) then
+    print("DOWN")
+    print(playerIsNotBlocked(targetX, targetY + 32))
     playerY = playerY + 32
   elseif pd.buttonJustPressed(pd.kButtonLeft) and playerIsNotBlocked(targetX - 32, targetY) then
+    print("LEFT")
+    print(playerIsNotBlocked(targetX - 32, targetY))
     playerX = playerX - 32
   elseif pd.buttonJustPressed(pd.kButtonRight) and playerIsNotBlocked(targetX + 32, targetY) then
+    print("RIGHT")
+    print(playerIsNotBlocked(targetX + 32, targetY))
     playerX = playerX + 32
   end
 
