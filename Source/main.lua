@@ -85,6 +85,19 @@ buildLevel(levels[currentLevel])
 
 local lerpFactor = 0.25
 
+function dump(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
 function isValueInTable(value, table)
   for _, v in pairs(table) do
       if v == value then
@@ -94,26 +107,14 @@ function isValueInTable(value, table)
   return false
 end
 
-function playerIsNotBlocked(x, y, direction)
-  -- Convert pixel coordinates to tile coordinates
+function playerIsNotBlocked(x, y)
   local tileX = (math.floor(x / 32)) + 1
   local tileY = (math.floor(y / 32)) + 1
 
-  print('--- TARGET ---')
-  print(tileX)
-  print('---')
-  print(tileY)
-  print('---')
-
-  print((tileY - 1) * 15 + tileX )
-
-  print(isValueInTable(((tileY - 1) * 15 + tileX) - 1, levels[currentLevel].walls))
-
-
-  -- print(isValueInTable((tyleY - 1) * 15 + tileX, levels[currentLevel].walls))
-
-  return not isValueInTable(((tileY - 1) * 15 + tileX) - 1, levels[currentLevel].walls)
-  -- return true
+  -- return not isValueInTable(((tileY - 1) * 15 + tileX) - 1, levels[currentLevel].walls)
+  -- check if tile being checked is 844
+  print ("WHAT: ", tilemap[(tileY - 1) * 15 + tileX] ~= 844)
+  return not tilemap[(tileY - 1) * 15 + tileX] ~= 844
 end
 
 function pd.update()
