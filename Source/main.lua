@@ -40,12 +40,13 @@ local tilemap = {}
 function buildLevel(level)
   local tilesetKeyTranslation = {
     walls = 844,
-    torches = 845,
-    ladders = 846,
-    holes = 847,
-    planks = 848,
-    coins = 849,
-    exit = 850
+    torches = 235,
+    ladders = 71,
+    holes = 57,
+    planks = 262,
+    coins = 189,
+    exit = 549,
+    start = 553
   }
 
   -- Create an empty tilemap
@@ -69,6 +70,7 @@ function buildLevel(level)
   setTiles(level.planks, "planks")
   setTiles(level.coins, "coins")
   setTiles(level.exit, "exit")
+  setTiles(level.start, "start")
 
   -- Create a tilemap object
   tm = gfx.tilemap.new()
@@ -108,20 +110,12 @@ function pd.update()
 
   -- Check for arrow key presses and update player coordinates
   if pd.buttonJustPressed(pd.kButtonUp) and playerIsNotBlocked(targetX, targetY - 32) then
-    print("UP")
-    print(playerIsNotBlocked(targetX, targetY - 32))
     playerY = playerY - 32
   elseif pd.buttonJustPressed(pd.kButtonDown) and playerIsNotBlocked(targetX, targetY + 32) then
-    print("DOWN")
-    print(playerIsNotBlocked(targetX, targetY + 32))
     playerY = playerY + 32
   elseif pd.buttonJustPressed(pd.kButtonLeft) and playerIsNotBlocked(targetX - 32, targetY) then
-    print("LEFT")
-    print(playerIsNotBlocked(targetX - 32, targetY))
     playerX = playerX - 32
   elseif pd.buttonJustPressed(pd.kButtonRight) and playerIsNotBlocked(targetX + 32, targetY) then
-    print("RIGHT")
-    print(playerIsNotBlocked(targetX + 32, targetY))
     playerX = playerX + 32
   end
 
